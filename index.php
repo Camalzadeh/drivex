@@ -1,15 +1,17 @@
+<?php session_start(); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Extracker - Login / Register</title>
-    <link rel="stylesheet" href="../css/index.css">
+    <link rel="stylesheet" href="css/index.css">
 </head>
 <body>
+
 <header class="header">
     <div class="header-container">
         <h1 class="logo">Extracker</h1>
+
         <nav class="auth-nav">
             <button id="show-login" class="nav-button active">Login</button>
             <button id="show-register" class="nav-button">Register</button>
@@ -20,51 +22,66 @@
 <main class="main-content">
     <div class="auth-container">
 
+        <!-- LOGIN FORM -->
         <div id="login-form" class="auth-form login active">
             <h2>Welcome Back</h2>
             <div id="login-message"></div>
-            <form action="../php/auth.php" method="POST">
+
+            <form id="loginForm">
                 <input type="hidden" name="action" value="login">
+
                 <div class="input-group">
-                    <label for="login-username">Username</label>
-                    <input type="text" id="login-username" name="username" required>
+                    <label>Username</label>
+                    <input type="text" name="username" required>
                 </div>
+
                 <div class="input-group">
-                    <label for="login-password">Password</label>
-                    <input type="password" id="login-password" name="password" required>
+                    <label>Password</label>
+                    <input type="password" name="password" required>
                 </div>
+
                 <button type="submit" class="submit-button">Sign In</button>
                 <p class="form-footer">Forgot your password? <a href="#">Reset</a></p>
             </form>
         </div>
 
+
+        <!-- REGISTER FORM -->
         <div id="register-form" class="auth-form register">
             <h2>Create Account</h2>
             <div id="register-message"></div>
-            <form action="../php/auth.php" method="POST">
+
+            <form id="registerForm">
                 <input type="hidden" name="action" value="register">
+
                 <div class="input-group">
-                    <label for="register-username">Username</label>
-                    <input type="text" id="register-username" name="username" required>
+                    <label>Username</label>
+                    <input type="text" name="username" required>
                 </div>
+
                 <div class="input-group">
-                    <label for="register-email">Email</label>
-                    <input type="email" id="register-email" name="email" required>
+                    <label>Email</label>
+                    <input type="email" name="email" required>
                 </div>
+
                 <div class="input-group">
-                    <label for="register-password">Password</label>
-                    <input type="password" id="register-password" name="password" required>
+                    <label>Password</label>
+                    <input type="password" name="password" required>
                 </div>
+
                 <div class="input-group">
-                    <label for="register-confirm-password">Confirm Password</label>
-                    <input type="password" id="register-confirm-password" name="confirm_password" required>
+                    <label>Confirm Password</label>
+                    <input type="password" name="confirm_password" required>
                 </div>
+
                 <button type="submit" class="submit-button">Sign Up</button>
             </form>
         </div>
+
     </div>
 </main>
 
-<script src="../js/index.js"></script>
+<script src="js/index.js"></script>
+
 </body>
 </html>

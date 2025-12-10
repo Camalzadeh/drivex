@@ -1,6 +1,6 @@
 <?php
 header('Content-Type: application/json');
-include 'db_config.php';
+include 'db.php';
 
 $response = [
     'weatherOptions' => [],
