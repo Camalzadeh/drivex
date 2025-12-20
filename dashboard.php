@@ -456,7 +456,7 @@ if (empty($badges)) {
 
             <?php elseif ($page === 'profile'): ?>
             <div class="profile-container">
-                <!-- Profile Header -->
+                
                 <div class="profile-header">
                     <div class="profile-cover"></div>
                     <div class="profile-info">
@@ -471,7 +471,7 @@ if (empty($badges)) {
                     </div>
                 </div>
 
-                <!-- Stats Row -->
+                
                 <div class="profile-stats-row">
                     <div class="profile-stat-card">
                         <ion-icon name="speedometer" class="stat-icon text-primary"></ion-icon>
@@ -495,12 +495,12 @@ if (empty($badges)) {
                     </div>
                 </div>
 
-                <!-- Experience Section -->
+                
                 <div class="experience-section">
                     <h3><ion-icon name="star" class="me-2 text-warning"></ion-icon>Earned Badges & Recent Activity</h3>
                     <div class="experience-timeline">
                         
-                        <!-- Badges -->
+                        
                         <?php foreach($badges as $badge): ?>
                         <div class="experience-item">
                             <div class="exp-icon <?php echo $badge['color']; ?>"><ion-icon name="<?php echo $badge['icon']; ?>"></ion-icon></div>
@@ -512,7 +512,7 @@ if (empty($badges)) {
                         </div>
                         <?php endforeach; ?>
 
-                        <!-- All Trips History -->
+                        
                         <?php 
                         
                         $allTrips = array_reverse($trips);
