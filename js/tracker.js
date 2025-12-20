@@ -43,14 +43,14 @@ $(document).ready(function () {
             watchID = null;
         }
 
-        // Check if any data was actually recorded
+        
         if (totalDistance <= 0 && routePoints.length === 0) {
             showStatus('Error: No location data recorded. Cannot save empty trip.', 'red');
 
-            // Reset UI state
+            
             $('#stop-btn').hide().text('Stop & Save').prop('disabled', false);
             $('#start-btn').show();
-            return; // EXIT - Do not submit
+            return; 
         }
 
         let endTime = new Date().toISOString();
@@ -61,7 +61,7 @@ $(document).ready(function () {
         showStatus('Trip Stopped. Saving...', '#dc3545');
         $('#stop-btn').text('Saved').prop('disabled', true);
 
-        // Submit form only if data exists
+        
         $('#live-form').submit();
     });
 });
@@ -74,7 +74,7 @@ function updatePosition(position) {
     if (lastLat !== null && lastLon !== null) {
         let dist = calculateDistance(lastLat, lastLon, lat, lon);
 
-        // Filter small GPS jitters (min 5 meters)
+        
         if (dist > 0.005) {
             totalDistance += dist;
             $('#distance-display').text(totalDistance.toFixed(2) + ' km');
@@ -112,7 +112,7 @@ function handleError(error) {
     console.warn('Geo Error: ' + msg);
     showStatus(msg + " (Tracking stopped)", "red");
 
-    // Auto-stop on critical error to prevent "stuck" state
+    
     if (watchID !== null) {
         navigator.geolocation.clearWatch(watchID);
         watchID = null;

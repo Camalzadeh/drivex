@@ -10,14 +10,14 @@ if ($action === 'register') {
     $password = $_POST['password'];
     $confirm = $_POST['confirm_password'];
 
-    // Basic Validation
+    
     if ($password !== $confirm) {
         $_SESSION['error'] = "Passwords do not match!";
         header("Location: ../index.php");
         exit;
     }
 
-    // Check if user exists
+    
     $stmt = $conn->prepare("SELECT user_id FROM Users WHERE username = ? OR email = ?");
     $stmt->execute([$username, $email]);
     if ($stmt->fetch()) {
@@ -26,7 +26,7 @@ if ($action === 'register') {
         exit;
     }
 
-    // Insert User
+    
     $hash = password_hash($password, PASSWORD_DEFAULT);
     $stmt = $conn->prepare("INSERT INTO Users (username, email, password_hash) VALUES (?, ?, ?)");
     

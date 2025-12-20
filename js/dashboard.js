@@ -1,6 +1,6 @@
 function initCharts(weatherLabels, weatherData, roadLabels, roadData, lineLabels, lineData, visLabels, visData, trafficLabels, trafficData) {
 
-    // Helper to safely destroy chart if it exists
+    
     const destroyChart = (id) => {
         const canvas = document.getElementById(id);
         if (canvas) {
@@ -108,31 +108,31 @@ $(document).ready(function () {
     });
 });
 
-// Validate Manual Form
+
 function validateManualForm() {
     const distInput = document.querySelector('#tab-manual input[name="distance"]');
     const roadTypes = document.querySelectorAll('#tab-manual input[name="road_type[]"]:checked');
     const traffic = document.querySelectorAll('#tab-manual input[name="traffic[]"]:checked');
 
-    // Check Distance > 0
+    
     if (!distInput.value || parseFloat(distInput.value) <= 0) {
         showManualError('Error: Distance must be greater than 0 km.');
         return false;
     }
 
-    // Check Road Type selected
+    
     if (roadTypes.length === 0) {
         showManualError('Error: Please select at least one Road Type.');
         return false;
     }
 
-    // Check Traffic selected
+    
     if (traffic.length === 0) {
         showManualError('Error: Please select at least one Traffic condition.');
         return false;
     }
 
-    return true; // Allow submit
+    return true; 
 }
 
 function showManualError(msg) {
@@ -141,7 +141,7 @@ function showManualError(msg) {
         errorDiv.textContent = msg;
         errorDiv.style.display = 'block';
 
-        // Hide after 5 seconds
+        
         setTimeout(() => { errorDiv.style.display = 'none'; }, 5000);
     } else {
         alert(msg);
@@ -153,6 +153,6 @@ function showTab(mode) {
     $('.tab-btn').removeClass('active');
     $('#tab-' + mode).show();
 
-    // Select based on the onclick attribute to be robust against order changes
+    
     $(`.tab-btn[onclick="showTab('${mode}')"]`).addClass('active');
 }

@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $endTime = $_POST['end_time'];
         $distance = $_POST['distance'] ?? 0;
         
-        // Validation: Prevent empty live trips
+        
         $tripType = $_POST['trip_type'] ?? 'manual';
         if ($tripType === 'live' && (float)$distance <= 0) {
             throw new Exception("Cannot save a live trip with 0 km distance.");
@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (is_array($routePoints)) {
             $pointStmt = $conn->prepare("INSERT INTO RoutePoints (session_id, latitude, longitude, timestamp) VALUES (?, ?, ?, ?)");
             foreach ($routePoints as $point) {
-                // Ensure timestamp exists, or use current
+                
                 $ts = $point['timestamp'] ?? date('Y-m-d H:i:s');
                 $pointStmt->execute([$sessionId, $point['lat'], $point['lng'], $ts]);
             }

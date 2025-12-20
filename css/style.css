@@ -1,4 +1,4 @@
-/* Main Reset */
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -8,7 +8,7 @@
 
 body {
     background-color: #e9ecef;
-    /* Light gray from sample */
+    
     color: #333;
     min-height: 100vh;
     display: flex;
@@ -367,7 +367,7 @@ main {
     background: white;
 }
 
-/* Tabs */
+
 .tabs {
     margin-bottom: 1.5rem;
     border-bottom: 2px solid #e9ecef;
@@ -389,7 +389,7 @@ main {
     font-weight: bold;
 }
 
-/* Tracker UI */
+
 .tracker-ui {
     background: #f8f9fa;
     border: 2px solid #dee2e6;
@@ -414,29 +414,29 @@ main {
     #sidebar-wrapper {
         margin-left: -250px;
         position: fixed;
-        /* Overlay on mobile */
+        
         z-index: 1000;
         height: 100%;
         width: 250px;
-        /* Always full width on mobile */
+        
     }
 
-    /* When toggled on mobile, show it (margin-left: 0) */
+    
     #wrapper.toggled #sidebar-wrapper {
         margin-left: 0;
         width: 250px;
     }
 
-    /* Hide the overlay content when toggled */
+    
     #page-content-wrapper {
         width: 100%;
     }
 
-    /* Ensure desktop 'collapsed' styles don't leak into mobile open state */
+    
     #wrapper.toggled #sidebar-wrapper .sidebar-heading .brand-text,
     #wrapper.toggled #sidebar-wrapper .link-text {
         display: inline-block !important;
-        /* Show text on mobile open */
+        
     }
 
     #wrapper.toggled #sidebar-wrapper .sidebar-heading {
@@ -456,9 +456,7 @@ main {
     }
 }
 
-/* =========================================
-   Analytics Strip & Premium Enhancements
-   ========================================= */
+
 
 .analytics-strip {
     display: flex;
@@ -520,7 +518,7 @@ main {
     font-weight: 500;
 }
 
-/* Glassmorphism / Premium Card Style Overrides */
+
 .card,
 .chart-wrapper,
 .table-container,
@@ -532,7 +530,7 @@ main {
     box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
 }
 
-/* Profile Section Styles */
+
 .profile-container {
     max-width: 1000px;
     margin: 0 auto;
@@ -566,14 +564,14 @@ main {
 .profile-text {
     flex: 1;
     padding-bottom: 20px;
-    /* Moved up to sit on gradient data */
+    
 }
 
 .profile-text h2 {
     margin: 0;
     font-size: 2.5rem;
     color: white;
-    /* White text for gradient overlap */
+    
     font-weight: 700;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
@@ -655,7 +653,7 @@ main {
     margin-bottom: 0.5rem;
 }
 
-/* Animations */
+
 @keyframes fadeInUp {
     from {
         opacity: 0;

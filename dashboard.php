@@ -48,7 +48,7 @@ foreach ($trips as $trip) {
     $w = $trip['weather_condition'];
     $weatherStats[$w] = ($weatherStats[$w] ?? 0) + 1;
 
-    // Handle multiple road types
+    
     $rList = $trip['road_types'] ? explode(', ', $trip['road_types']) : ['Unknown'];
     foreach ($rList as $r) {
         $roadStats[$r] = ($roadStats[$r] ?? 0) + 1;
@@ -58,11 +58,11 @@ foreach ($trips as $trip) {
     if (!isset($dateStats[$date])) $dateStats[$date] = 0;
     $dateStats[$date] += $trip['mileage'];
 
-    // Visibility Stats
+    
     $v = $trip['visibility'];
     $visStats[$v] = ($visStats[$v] ?? 0) + 1;
 
-    // Handle multiple traffic conditions
+    
     $tList = $trip['traffic_conditions'] ? explode(', ', $trip['traffic_conditions']) : ['Unknown'];
     foreach ($tList as $t) {
         $trafficStats[$t] = ($trafficStats[$t] ?? 0) + 1;
@@ -96,16 +96,16 @@ $totalDistance = array_sum(array_column($trips, 'mileage'));
 $totalTrips = count($trips);
 
 
-// --- New Logic for Profile & Analytics ---
 
-// 1. Fetch User Details
+
+
 $userStmt = $conn->prepare("SELECT email, created_at FROM Users WHERE user_id = ?");
 $userStmt->execute([$userId]);
 $user = $userStmt->fetch();
 $userEmail = $user['email'] ?? 'user@example.com';
 $memberSince = $user['created_at'] ? date('M Y', strtotime($user['created_at'])) : 'Jan 2025';
 
-// 2. Calculate Stats for Analytics Strip
+
 $totalDurationSeconds = 0;
 foreach ($trips as $t) {
     $start = strtotime($t['start_date']);
@@ -114,12 +114,12 @@ foreach ($trips as $t) {
 }
 $totalHours = $totalDurationSeconds > 0 ? $totalDurationSeconds / 3600 : 0;
 $avgSpeed = $totalHours > 0 ? $totalDistance / $totalHours : 0;
-$fuelSaved = $totalDistance * 0.12; // Dummy calc
+$fuelSaved = $totalDistance * 0.12; 
 
-// 3. Derive Badges (Real Logic)
+
 $badges = [];
 
-// Badge: Night Rider (Visibility = Low/2 or Moderate/3)
+
 $nightDrives = array_filter($trips, fn($t) => in_array($t['visibility'], ['Low', 'Moderate'])); 
 if (count($nightDrives) > 0) {
     $badges[] = [
@@ -130,7 +130,7 @@ if (count($nightDrives) > 0) {
     ];
 }
 
-// Badge: Rain Master (Weather = Rainy/2)
+
 $rainDrives = array_filter($trips, fn($t) => $t['weather_condition'] === 'Rainy');
 if (count($rainDrives) > 0) {
     $badges[] = [
@@ -141,7 +141,7 @@ if (count($rainDrives) > 0) {
     ];
 }
 
-// Badge: Marathon Driver
+
 if ($totalDistance > 50) {
     $badges[] = [
         'icon' => 'ribbon',
@@ -514,7 +514,7 @@ if (empty($badges)) {
 
                         <!-- All Trips History -->
                         <?php 
-                        // Reverse trips to show newest first
+                        
                         $allTrips = array_reverse($trips);
                         foreach ($allTrips as $trip): 
                         ?>
