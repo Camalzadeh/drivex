@@ -25,7 +25,7 @@
         <!-- LOGIN FORM -->
         <div id="login-form" class="auth-form login active">
             <h2>Welcome Back</h2>
-            <div id="login-message"></div>
+            <div id="login-message" class="message"></div>
 
             <form id="loginForm">
                 <input type="hidden" name="action" value="login">
@@ -49,7 +49,7 @@
         <!-- REGISTER FORM -->
         <div id="register-form" class="auth-form register">
             <h2>Create Account</h2>
-            <div id="register-message"></div>
+            <div id="register-message" class="message"></div>
 
             <form id="registerForm">
                 <input type="hidden" name="action" value="register">

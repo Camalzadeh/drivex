@@ -1,80 +1,60 @@
 <?php
-// backend/session_handlers.php
+require "db.php"; // PDO $pdo burada olsun
 
-global $conn;
-
-// Sessionu açır
-function my_session_open($savePath, $sessionName) {
-    global $conn;
-    return $conn !== null;
-}
-
-// Sessionu bağlayır
-function my_session_close() {
+function sess_open($savePath, $sessionName) {
     return true;
 }
 
-// Session ID-yə görə məlumatı DB-dən oxuyur
-function my_session_read($id) {
-    global $conn;
-    try {
-        $stmt = $conn->prepare("SELECT data FROM sessions WHERE id = ? AND last_activity > ?");
-        $lifetime = time() - ini_get('session.gc_maxlifetime');
-        $stmt->execute([$id, $lifetime]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        return $row ? $row['data'] : '';
-    } catch (PDOException $e) {
-        error_log("Session Read Error: " . $e->getMessage());
-        return '';
-    }
+function sess_close() {
+    return true;
 }
 
-// Session ID-yə görə məlumatı DB-yə yazır/yeniləyir
-function my_session_write($id, $data) {
-    global $conn;
-    $now = time();
+function sess_read($id) {
+    global $pdo;
 
-    try {
-        $stmt = $conn->prepare("
-            INSERT INTO sessions (id, last_activity, data) 
-            VALUES (?, ?, ?)
-            ON DUPLICATE KEY UPDATE 
-                last_activity = VALUES(last_activity), 
-                data = VALUES(data)
-        ");
-        $stmt->execute([$id, $now, $data]);
-        return true;
-    } catch (PDOException $e) {
-        error_log("Session Write Error: " . $e->getMessage());
-        return false;
-    }
+    $stmt = $pdo->prepare("SELECT data FROM sessions WHERE id = ?");
+    $stmt->execute([$id]);
+
+    $row = $stmt->fetch();
+    return $row ? $row['data'] : '';
 }
 
-// Session ID-yə görə Sessionu DB-dən silir
-function my_session_destroy($id) { // Ad dəyişdirildi!
-    global $conn;
-    try {
-        $stmt = $conn->prepare("DELETE FROM sessions WHERE id = ?");
-        $stmt->execute([$id]);
-        return true;
-    } catch (PDOException $e) {
-        error_log("Session Destroy Error: " . $e->getMessage());
-        return false;
-    }
+function sess_write($id, $data) {
+    global $pdo;
+
+    $time = time();
+
+    $stmt = $pdo->prepare("
+        REPLACE INTO sessions (id, data, timestamp)
+        VALUES (?, ?, ?)
+    ");
+
+    return $stmt->execute([$id, $data, $time]);
 }
 
-// Vaxtı bitmiş Sessionları DB-dən təmizləyir
-function my_session_gc($maxlifetime) {
-    global $conn;
-    try {
-        $old = time() - $maxlifetime;
-        $stmt = $conn->prepare("DELETE FROM sessions WHERE last_activity < ?");
-        $stmt->execute([$old]);
-        return true;
-    } catch (PDOException $e) {
-        error_log("Session GC Error: " . $e->getMessage());
-        return false;
-    }
+function sess_destroy($id) {
+    global $pdo;
+
+    $stmt = $pdo->prepare("DELETE FROM sessions WHERE id = ?");
+    return $stmt->execute([$id]);
 }
+
+function sess_gc($maxlifetime) {
+    global $pdo;
+
+    $old = time() - $maxlifetime;
+    $stmt = $pdo->prepare("DELETE FROM sessions WHERE timestamp < ?");
+    return $stmt->execute([$old]);
+}
+
+session_set_save_handler(
+    "sess_open",
+    "sess_close",
+    "sess_read",
+    "sess_write",
+    "sess_destroy",
+    "sess_gc"
+);
+
+session_start();
 ?>

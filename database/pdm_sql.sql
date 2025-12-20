@@ -29,15 +29,19 @@ CREATE TABLE TrafficCondition
 CREATE TABLE DrivingSession
 (
     session_id           INT       NOT NULL AUTO_INCREMENT,
+    user_id              INT       NOT NULL,
     start_date           TIMESTAMP NOT NULL,
     end_date             TIMESTAMP NOT NULL,
     mileage              FLOAT,
     visibility_id        INT       NOT NULL,
     weather_condition_id INT       NOT NULL,
     PRIMARY KEY (session_id),
+
+    FOREIGN KEY (user_id) REFERENCES Users (user_id),
     FOREIGN KEY (visibility_id) REFERENCES Visibility (visibility_id),
     FOREIGN KEY (weather_condition_id) REFERENCES WeatherCondition (weather_condition_id)
 );
+
 
 CREATE TABLE OccursOn
 (
@@ -77,7 +81,7 @@ INSERT INTO RoadType
 VALUES (2, 'Highway');
 
 INSERT INTO DrivingSession
-VALUES (1, '2025-05-17 08:00:00', '2025-05-17 08:30:00', 15.2, 1, 1);
+VALUES (1, 1,'2025-05-17 08:00:00', '2025-05-17 08:30:00', 15.2, 1, 1);
 
 INSERT INTO TakesPlace
 VALUES (1, 1);
@@ -100,7 +104,7 @@ VALUES (3, 'Rural');
 
 
 INSERT INTO DrivingSession
-VALUES (2, '2025-05-18 14:10:00', '2025-05-18 15:05:00', 18.3, 3, 3);
+VALUES (2,1, '2025-05-18 14:10:00', '2025-05-18 15:05:00', 18.3, 3, 3);
 
 INSERT INTO TakesPlace
 VALUES (2, 3);

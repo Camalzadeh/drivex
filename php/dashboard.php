@@ -8,16 +8,20 @@ if (!isset($_SESSION['user_id'])) {
 
 $username = $_SESSION['username'];
 ?>
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard</title>
+    <title>Extracker - Dashboard</title>
+    <link rel="stylesheet" href="../css/dashboard.css">
 </head>
 <body>
-<h1>Welcome, <?= htmlspecialchars($username) ?></h1>
+
+<h1>Welcome, <?= htmlspecialchars($username) ?> 👋</h1>
+
+<p>This is your dashboard page.</p>
 
 <a href="logout.php">Logout</a>
+
 </body>
 </html>
