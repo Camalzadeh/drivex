@@ -40,6 +40,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
+          protocol: ftps
           # AlwaysData-da adətən public qovluq www olur, əgər fərqlidirsə buranı dəyişin
           server-dir: ./www/ 
           # .git və digər lazım olmayan faylları göndərməmək üçün
