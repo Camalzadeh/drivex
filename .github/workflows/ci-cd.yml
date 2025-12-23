@@ -16,21 +16,20 @@ jobs:
       - name: 🐘 Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.2' # Serverinizdəki PHP versiyasına uyğunlaşdırın (8.0, 8.1, 8.2, etc.)
+          php-version: '8.2'
 
       - name: 🔍 Check PHP Syntax
         run: find . -name "*.php" ! -path "./vendor/*" -print0 | xargs -0 -n1 php -l
 
   web-deploy:
     name: 🚀 Deploy
-    needs: ci # Deploy yalnız CI uğurlu olduqdan sonra başlayacaq
+    needs: ci
     runs-on: ubuntu-latest
     steps:
       - name: 🚚 Get latest code
         uses: actions/checkout@v4
 
       - name: 📝 Create config.php from Secret
-        # Bu addım github secret-dən config.php faylını yaradır
         run: |
           echo "${{ secrets.PHP_CONFIG_CONTENT }}" > php/config.php
 
@@ -41,10 +40,7 @@ jobs:
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
           port: 22
-          source: "."
-          target: "./www"
-          # Köhnə faylları silməsin, sadəcə yeniləsin
+          source: ".htaccess,assets,css,js,php,dashboard.php,index.php"
+          target: "./www/extracker"
           rm: false 
           strip_components: 0
-          # Göndərilməyəcək faylların siyahısı (vergüllə ayrılır)
-          exclude: ".git,.github,test,frontend,database.zip,frontend.zip,node_modules"
