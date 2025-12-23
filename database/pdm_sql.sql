@@ -90,7 +90,7 @@ CREATE TABLE RoutePoints
     FOREIGN KEY (session_id) REFERENCES DrivingSession (session_id)
 );
 
-INSERT INTO users (username, email, password_hash)
+INSERT INTO Users (username, email, password_hash)
 VALUES ('testuser', 'test@extracker.com', '$2y$10$wE9N6gXbL8jTz0ZzZlG1Q.W.yP1zN7E6F2jC4B5P2C0F2D1A1');
 
 INSERT INTO Visibility
