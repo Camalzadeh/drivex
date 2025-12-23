@@ -1,0 +1,53 @@
+name: Deploy to AlwaysData
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  ci:
+    name: 🧪 CI - Syntax Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 🐘 Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2' # Serverinizdəki PHP versiyasına uyğunlaşdırın (8.0, 8.1, 8.2, etc.)
+
+      - name: 🔍 Check PHP Syntax
+        run: find . -name "*.php" ! -path "./vendor/*" -print0 | xargs -0 -n1 php -l
+
+  web-deploy:
+    name: 🚀 Deploy
+    needs: ci # Deploy yalnız CI uğurlu olduqdan sonra başlayacaq
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🚚 Get latest code
+        uses: actions/checkout@v4
+
+      - name: 📝 Create config.php from Secret
+        # Bu addım github secret-dən config.php faylını yaradır
+        run: |
+          echo "${{ secrets.PHP_CONFIG_CONTENT }}" > php/config.php
+
+      - name: 📂 Sync files via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+        with:
+          server: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USERNAME }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          # AlwaysData-da adətən public qovluq www olur, əgər fərqlidirsə buranı dəyişin
+          server-dir: ./www/ 
+          # .git və digər lazım olmayan faylları göndərməmək üçün
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**
+            test/**
+            frontend/**
+            database.zip
+            frontend.zip
