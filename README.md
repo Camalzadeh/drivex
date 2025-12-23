@@ -41,8 +41,8 @@
 
 1.  **Clone the Repository**
     ```bash
-    git clone https://github.com/Camalzadeh/drivex.git
-    cd drivex
+    git clone https://github.com/Camalzadeh/extracker.git
+    cd extracker
     ```
 
 2.  **Database Setup**
