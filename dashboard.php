@@ -126,7 +126,6 @@ switch ($page) {
         break;
 }
 ?>
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
