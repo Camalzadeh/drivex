@@ -86,20 +86,24 @@ class TripManager {
             $stmt->execute([$userId, $startTime, $endTime, $distance, $visibilityId, $weatherId]);
             $sessionId = $this->conn->lastInsertId();
 
-            $roadData = $data['road_type'];
+            $roadData = $data['road_type'] ?? [];
             if (!is_array($roadData)) $roadData = [$roadData];
             
             $stmtOccurs = $this->conn->prepare(Queries::INSERT_OCCURS_ON);
             foreach ($roadData as $rId) {
-                $stmtOccurs->execute([$sessionId, $rId]);
+                if (!empty($rId)) {
+                    $stmtOccurs->execute([$sessionId, $rId]);
+                }
             }
 
-            $trafficData = $data['traffic'];
+            $trafficData = $data['traffic'] ?? [];
             if (!is_array($trafficData)) $trafficData = [$trafficData];
 
             $stmtTakes = $this->conn->prepare(Queries::INSERT_TAKES_PLACE);
             foreach ($trafficData as $tId) {
-                $stmtTakes->execute([$sessionId, $tId]);
+                if (!empty($tId)) {
+                    $stmtTakes->execute([$sessionId, $tId]);
+                }
             }
 
             if (isset($data['route_points']) && !empty($data['route_points']) && $data['route_points'] !== '[]') {

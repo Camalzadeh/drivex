@@ -340,6 +340,12 @@ switch ($page) {
                 </div>
 
                 <div id="tab-live" class="tab-content" style="display:none;">
+                    <div class="custom-warning">
+                        <ion-icon name="warning-outline" style="font-size: 1.5rem; color: #856404; margin-right: 10px;"></ion-icon>
+                        <div>
+                            <strong>Note:</strong> Due to technical limitations of the Geolocation API, tracking accuracy may vary on some desktop devices.
+                        </div>
+                    </div>
                     <div class="tracker-ui">
                         <div class="tracker-status">
                             <ion-icon name="navigate-circle-outline" style="font-size: 64px; color: #36A2EB;"></ion-icon>
@@ -348,7 +354,7 @@ switch ($page) {
                         </div>
                         <div class="tracker-controls">
                             <button id="start-btn" type="button" class="btn btn-primary">Start Tracking</button>
-                            <button id="stop-btn" type="button" class="btn btn-danger" style="display:none;">Stop & Save</button>
+                            <button id="stop-btn" type="button" class="btn btn-danger" style="display:none;">Stop</button>
                         </div>
                     </div>
                     

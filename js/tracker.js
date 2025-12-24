@@ -1,5 +1,3 @@
-
-
 let watchID = null;
 let totalDistance = 0;
 let routePoints = [];
@@ -10,22 +8,66 @@ let startTime = null;
 $(document).ready(function () {
 
     $('#start-btn').on('click', function (e) {
-        e.preventDefault();
-        console.log('Start button clicked');
+        startTracking();
+    });
 
+    $('#stop-btn').click(function () {
+        if (watchID !== null) {
+            navigator.geolocation.clearWatch(watchID);
+            watchID = null;
+            showStatus('Tracking Paused.', '#ffc107');
+            $(this).text('Continue').removeClass('btn-danger').addClass('btn-success');
+        } else {
+            showStatus('Resuming Tracking...', '#ffc107');
+            $(this).text('Stop').removeClass('btn-success').addClass('btn-danger');
+            startTracking(true);
+        }
+    });
+
+    $('#live-form').on('submit', function (e) {
+        if (totalDistance === 0) {
+            e.preventDefault();
+            alert('Error: Distance cannot be 0 km. Drive some distance first.');
+            return false;
+        }
+
+        if (totalDistance > 0 && totalDistance < 0.1) {
+            totalDistance = 0.1;
+        }
+
+        const roadTypes = $('#tab-live input[name="road_type[]"]:checked').length;
+        const traffic = $('#tab-live input[name="traffic[]"]:checked').length;
+
+        if (roadTypes === 0 || traffic === 0) {
+            e.preventDefault();
+            alert('Error: Please select at least one Road Type and Traffic condition.');
+            return false;
+        }
+
+        let endTime = new Date().toISOString();
+        $('#end-time').val(endTime);
+        $('#distance-input').val(totalDistance.toFixed(2));
+        $('#route-points').val(JSON.stringify(routePoints));
+
+        return true;
+    });
+
+    function startTracking(isResuming = false) {
         if (!navigator.geolocation) {
             showStatus("Geolocation is not supported by your browser.", "red");
             return;
         }
 
-        totalDistance = 0;
-        routePoints = [];
-        lastLat = null;
-        lastLon = null;
-        startTime = new Date().toISOString();
-        $('#start-time').val(startTime);
+        if (!isResuming) {
+            totalDistance = 0;
+            routePoints = [];
+            lastLat = null;
+            lastLon = null;
+            startTime = new Date().toISOString();
+            $('#start-time').val(startTime);
+        }
 
-        $(this).hide();
+        $('#start-btn').hide();
         $('#stop-btn').show();
         showStatus('Thinking...', '#ffc107');
 
@@ -34,33 +76,7 @@ $(document).ready(function () {
             timeout: 20000,
             maximumAge: 0
         });
-        console.log('WatchPosition initialized', watchID);
-    });
-
-    $('#stop-btn').click(function () {
-        if (watchID !== null) {
-            navigator.geolocation.clearWatch(watchID);
-            watchID = null;
-        }
-
-        if (totalDistance <= 0 && routePoints.length === 0) {
-            showStatus('Error: No location data recorded. Cannot save empty trip.', 'red');
-
-            $('#stop-btn').hide().text('Stop & Save').prop('disabled', false);
-            $('#start-btn').show();
-            return;
-        }
-
-        let endTime = new Date().toISOString();
-        $('#end-time').val(endTime);
-        $('#distance-input').val(totalDistance.toFixed(2));
-        $('#route-points').val(JSON.stringify(routePoints));
-
-        showStatus('Trip Stopped. Saving...', '#dc3545');
-        $('#stop-btn').text('Saved').prop('disabled', true);
-
-        $('#live-form').submit();
-    });
+    }
 });
 
 function updatePosition(position) {

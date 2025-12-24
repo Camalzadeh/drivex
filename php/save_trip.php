@@ -11,6 +11,9 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $userId = $_SESSION['user_id'];
     
+    $distance = $_POST['distance'] ?? 0;
+    $tripType = $_POST['trip_type'] ?? 'manual';
+
     if ($tripType === 'live' && (float)$distance < 0) {
         die("Invalid distance value.");
     }
