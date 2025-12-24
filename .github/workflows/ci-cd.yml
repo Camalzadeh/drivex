@@ -7,33 +7,38 @@ on:
 
 jobs:
   ci:
-    name: 🧪 CI - Syntax Check
+    name: CI - Syntax Check
+    if: ${{ !contains(github.event.head_commit.message, '[no ci-cd]') && !contains(github.event.head_commit.message, '[no-ci]') }}
     runs-on: ubuntu-latest
     steps:
-      - name: 🚚 Get latest code
+      - name: Get latest code
         uses: actions/checkout@v4
 
-      - name: 🐘 Setup PHP
+      - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.2'
 
-      - name: 🔍 Check PHP Syntax
+      - name: Check PHP Syntax
         run: find . -name "*.php" ! -path "./vendor/*" -print0 | xargs -0 -n1 php -l
 
   web-deploy:
-    name: 🚀 Deploy
+    name: Deploy
+    if: ${{ !contains(github.event.head_commit.message, '[no ci-cd]') && !contains(github.event.head_commit.message, '[no-ci]') && !contains(github.event.head_commit.message, '[no-cd]') }}
     needs: ci
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://humbat.alwaysdata.net/extracker
     steps:
-      - name: 🚚 Get latest code
+      - name: Get latest code
         uses: actions/checkout@v4
 
-      - name: 📝 Create config.php from Secret
+      - name: Create config.php from Secret
         run: |
           echo "${{ secrets.PHP_CONFIG_CONTENT }}" > php/config.php
 
-      - name: 📂 Deploy via SFTP
+      - name: Deploy via SFTP
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.FTP_SERVER }}
