@@ -15,6 +15,7 @@
 *   **Trip Logging**:
     *   **Manual Entry**: Log past trips with detailed conditions (Weather, Traffic, Road Type).
     *   **Live Tracking**: (Simulation) Interface for real-time trip recording.
+*   **Robust Data Validation**: Comprehensive checks on frontend and backend to ensure data integrity (time logic, mandatory fields).
 *   **Gamification**: Earn badges like "Night Rider", "Rain Master", and "Marathon Driver" based on your driving stats.
 *   **Profile System**: View personal statistics and driving timeline.
 *   **Responsive Design**: Built with Bootstrap 5, fully functional on mobile and desktop.
@@ -34,7 +35,7 @@
 *   **js/**: JavaScript files for dashboard logic and tracking (dashboard.js, tracker.js).
 *   **html_views/**: HTML templates separating presentation from logic.
 *   **php/**: Backend logic following MVC and Service-Repository patterns:
-    *   **config/**: DB connection and configuration files.
+    *   **config/**: DB connection, `bootstrap.php` (Error Handling), and configuration files.
     *   **controllers/**: `AuthController`, `TripController`.
     *   **models/**: Entity classes (`User`, `DrivingSession`, etc.).
     *   **repositories/**: Database access layer (`UserRepository`, `DrivingSessionRepository`).
@@ -66,7 +67,8 @@
             'db_host' => 'localhost',
             'db_name' => 'extracker_db',
             'db_user' => 'root',
-            'db_pass' => ''
+            'db_pass' => '',
+            'environment' => 'development'
         ];
         ?>
         ```
