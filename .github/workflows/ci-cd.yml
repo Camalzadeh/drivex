@@ -47,5 +47,5 @@ jobs:
           port: 22
           source: ".htaccess,assets,css,js,php,html_views,dashboard.php,index.php"
           target: "./www/extracker"
-          rm: false 
+          rm: true 
           strip_components: 0
