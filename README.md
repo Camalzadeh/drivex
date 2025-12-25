@@ -32,10 +32,18 @@
 *   **assets/**: Images and static resources (e.g., logos).
 *   **css/**: Custom stylesheets (auth.css, style.css).
 *   **js/**: JavaScript files for dashboard logic and tracking (dashboard.js, tracker.js).
-*   **php/**: Backend logic files (auth_actions.php, db.php, save_trip.php).
-*   **database/**: SQL dump file (pdm_sql.sql) for database initialization.
-*   **index.php**: Login and Registration page.
-*   **dashboard.php**: Main application interface.
+*   **html_views/**: HTML templates separating presentation from logic.
+*   **php/**: Backend logic following MVC and Service-Repository patterns:
+    *   **config/**: DB connection and configuration files.
+    *   **controllers/**: `AuthController`, `TripController`.
+    *   **models/**: Entity classes (`User`, `DrivingSession`, etc.).
+    *   **repositories/**: Database access layer (`UserRepository`, `DrivingSessionRepository`).
+    *   **services/**: Business logic layer (`AuthService`, `TripService`).
+    *   **utils/**: Utility classes.
+    *   **router.php**: Central request dispatcher.
+*   **db/**: Database documentation and SQL initialization scripts.
+*   **index.php**: Main entry point for Authentication (Controller).
+*   **dashboard.php**: Main entry point for Dashboard (Controller).
 
 ## Installation & Setup
 
@@ -50,14 +58,16 @@
     *   Import the database/pdm_sql.sql file into your database.
 
 3.  **Configuration**
-    *   Create a php/config.php file based on your environment.
+    *   Create a `php/config/config.inc.php` file based on your environment.
     *   Example content:
         ```php
         <?php
-        define('DB_HOST', 'localhost');
-        define('DB_USER', 'root');
-        define('DB_PASS', '');
-        define('DB_NAME', 'extracker_db');
+        return [
+            'db_host' => 'localhost',
+            'db_name' => 'extracker_db',
+            'db_user' => 'root',
+            'db_pass' => ''
+        ];
         ?>
         ```
 

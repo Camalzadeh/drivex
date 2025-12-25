@@ -45,4 +45,25 @@ class Queries {
     const GET_ALL_VISIBILITIES = "SELECT * FROM Visibility";
     const GET_ALL_WEATHER_CONDITIONS = "SELECT * FROM WeatherCondition";
     const GET_ALL_TRAFFIC_CONDITIONS = "SELECT * FROM TrafficCondition";
+
+    const FIND_USER_BY_ID = "SELECT * FROM Users WHERE user_id = :id";
+    const FIND_USER_BY_EMAIL = "SELECT * FROM Users WHERE email = :email";
+
+    const FIND_SESSION_BY_ID = "SELECT * FROM DrivingSession WHERE session_id = :id";
+    const FIND_VISIBILITY_BY_ID = "SELECT * FROM Visibility WHERE visibility_id = :id";
+    const FIND_WEATHER_BY_ID = "SELECT * FROM WeatherCondition WHERE weather_condition_id = :id";
+    
+    const GET_SESSION_ROAD_TYPES = "
+        SELECT rt.* FROM RoadType rt 
+        JOIN OccursOn oo ON rt.road_type_id = oo.road_type_id 
+        WHERE oo.session_id = :sid
+    ";
+    
+    const GET_SESSION_TRAFFIC_CONDITIONS = "
+        SELECT tc.* FROM TrafficCondition tc 
+        JOIN TakesPlace tp ON tc.traffic_condition_id = tp.traffic_condition_id 
+        WHERE tp.session_id = :sid
+    ";
+    
+    const GET_SESSION_ROUTE_POINTS = "SELECT * FROM RoutePoints WHERE session_id = :sid ORDER BY timestamp ASC";
 }

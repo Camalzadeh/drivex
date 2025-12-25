@@ -1,5 +1,5 @@
 <?php
-$config = include(__DIR__ . "/config.php");
+$config = include(__DIR__ . "/config.inc.php");
 
 try {
     $conn = new PDO("mysql:host={$config['db_host']};dbname={$config['db_name']};charset=utf8", $config['db_user'], $config['db_pass']);
