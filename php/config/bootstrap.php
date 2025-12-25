@@ -12,4 +12,6 @@ if (isset($config['environment']) && $config['environment'] === 'production') {
     ini_set('log_errors', 1);
     ini_set('error_reporting', E_ALL);
 }
+
+date_default_timezone_set('UTC');
 ?>

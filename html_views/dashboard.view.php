@@ -127,7 +127,7 @@
                     <tbody>
                         <?php foreach(array_reverse($trips) as $trip): ?>
                         <tr>
-                            <td><?php echo date('M d, Y', strtotime($trip['start_date'])); ?></td>
+                            <td><?php echo (new DateTime($trip['start_date']))->format('M d, Y H:i'); ?></td>
                             <td><?php echo number_format($trip['mileage'], 1); ?> km</td>
                             <td><?php echo $trip['visibility']; ?></td>
                             <td><?php echo $trip['weather_condition']; ?></td>
