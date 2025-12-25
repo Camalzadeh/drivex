@@ -1,6 +1,5 @@
 <?php
-ini_set('display_errors', 1);
-ini_set('log_errors', 1);
+require_once __DIR__ . '/php/config/bootstrap.php';
 session_start();
 require_once "php/config/db.inc.php";
 

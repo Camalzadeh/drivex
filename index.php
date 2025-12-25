@@ -1,4 +1,5 @@
 <?php
+require_once __DIR__ . '/php/config/bootstrap.php';
 session_start();
 if (isset($_SESSION['user_id'])) {
     header("Location: dashboard.php");
